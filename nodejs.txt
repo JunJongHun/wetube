@@ -1,0 +1,60 @@
+nodeJs 프로젝드를 만들기 위해서는 package.json 파일을 만들어야 한다.
+(파일 이름은 무조건 소문자에 package.json 이여야 한다.) 
+package.json 파일 안에는 json object를 만들어줘야한다.
+
+json object 아래와 같은 형식을 가진다.
+
+{
+    "name": "wetube"
+}
+
+이런식으로 객체에 정보를 저장한다.
+
+what is json? json 이란 프로그래머가 파일에 정보를 저장하기 위해 만든 방식 중 하나 이다.
+
+*git init 하는 거는 알아두자. 깃 사용법에 대해서 알아두기
+
+package.json 에 보면 다양한 정보들이 있는데
+"main" 은 패키지를 배포를 해서 패키지를 다운받고 사용하게되면 main이 실행되게 한다.
+"scripts" 는 package.json에서 원하는 파일을 실행 시킬 수 있는 명령어들을 모아둔 곳 이다.
+(node index.js 처럼 실행하는 것과 npm run 스크립트에 있는 문장 을 사용하는 것은 차이점이 있다.)
+npm run 을 사용하려면 package.json이 있는 프로젝트 파일에서 사용해야 가능하다.
+
+node_modules 파일은 npm으로 설치한 패키지들이 저장되는 곳.
+
+예를 들어서 npm install express를 하게 되면 node_moudules에 패키기가 저장이 되는데,
+express 패키지만 생성되는게 아니다. 왜냐하면 express를 사용하기 위해서는 
+또 다른 패키지들이 필요로 하기 때문에 express 패키지와 종속된 패키지들은 
+npm이 자동으로 설치를 해준다. 패키지를 설치 했을 때, 다른 패키지들도 자동으로 설치 될 수
+있다는 것을 알아두자.
+
+종속되어 있는 패키지들이 써져 있는 곳은 package.json 안에 dependencies라는 곳에 써져 있다.
+그리고 내 프로젝트에 잇는 package.json에 보면 dependencies에 express가 추가 된 것을 볼 수 있다.
+
+이 과정은 굉장히 중요하다고 볼 수 있다. 왜냐하면 팀 프로젝트를 할 때, git 에 올려서 
+작업을 할텐데, node_modules 파일을 올리게 된다면 굉장히 많은 공간을 차지 할 것 이다.
+이럴 때, package.json과 package-lock.json,indexjs 만 공유한다면 npm isntall을 통해서
+dependencies에 있는 패키지들을 손 쉽게 다운로드 할 수 있기 때문이다. package-lock.json을 통해서
+버전 관리도 똑같이 할 수 있을 것이다.
+
+* git 에 파일을 올리고 싶지 않은 경우에는 .gitignore 파일을 만들고,
+무시하고 싶은 파일 명을 적어주면된다. ex) /node_modules 이렇게 작성하면 된다.
+
+dependencies 와 devDpendencies 차이는 무엇인가?
+dependencies 프로젝트를 실행하는데 필요한 것을 모아둔 곳이고,
+devDpendencies 는 개발자가 필요한 것들을 모아둔 곳이다.
+하지만 설치되는건 node_modules에 모두 설치된다. 구분짓기 위함일 뿐이다.
+( 설치를 할 때, install --save-dev @babel/core 이런식으로 해줘야 package.json에 구별지어서 저장된다.)
+( --save-dev 를 안하면 dependencies에 저장된다.)
+( 혹여 실수를 하더라도 package.json 파일에서 직접 수정해도 무관하다. 왜냐하면 text 파일이니까)
+
+
+* babel 에서 preset은 플러그인이다. 플러그인은 도와주는 녀석이다.(추가적으로 알아볼 것 자바스크립트 말고도 다른것들도 되는 듯 하다)
+
+babel은 javascript 문법을 최신 버전으로 바꿔주는 플러그인이다.
+이걸 왜 사용해야하나? 오래된 문법을 사용했을 경우 컴파일 과정에서 에러가 날 수 있다.
+버전에 맞지 않는 것들을 바꿔줌으로써 좀 더 편리하게 코드를 작성 할 수 있다.
+
+babel을 사용하기 위해서는 babel.config.json 파일을 만들고 세팅해줘야한다.(홈페이지를 참고하자)
+
+nodemon 은 파일을 수정할 때마다 자동으로 파일을 실행해주는 패키지다.(npm run 을 한번만 해도 된다.)
