@@ -4,7 +4,10 @@ const PORT = 4000;
 
 const app = express();
 
-const handleHome = () => console.log("handleHome");
+const handleHome = (req, res) => {
+  console.log(req);
+  console.log("handleHome");
+};
 
 app.get("/", handleHome);
 
