@@ -1,22 +1,20 @@
 import express from "express";
+import morgan from "morgan";
+import globalRouter from "./routers/globalRouter";
+import videoRouter from "./routers/videoRouter";
+import userRouter from "./routers/userRouter";
 
 const PORT = 4000;
 
 const app = express();
 
-const handleHome = (req, res) => {
-  console.log(req);
-  console.log("handleHome");
-  return res.end();
-};
+const logger = morgan("dev");
+app.use(logger);
 
-const handleLogin = (req, res) => {
-  return res.send("hi hi hi this is login part!");
-};
+app.use("/", globalRouter);
+app.use("/users", userRouter);
+app.use("/video", videoRouter);
 
-app.get("/", handleHome);
-app.get("/login", handleLogin);
-
-const handleListening = () => console.log(`sdaf: ${PORT}`);
+const handleListening = () => console.log(`site : http://localhost:${PORT}`);
 
 app.listen(PORT, handleListening);
