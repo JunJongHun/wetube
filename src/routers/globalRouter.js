@@ -1,10 +1,12 @@
 import express from "express";
-import { join } from "../controllers/userController";
-import { trending } from "../controllers/videoController";
+import { join, login } from "../controllers/userController";
+import { trending, search } from "../controllers/videoController";
 
 const gloablRouter = express.Router();
 
 gloablRouter.get("/", trending);
 gloablRouter.get("/join", join);
+gloablRouter.get("/login", login);
+gloablRouter.get("/search", search);
 
 export default gloablRouter;
