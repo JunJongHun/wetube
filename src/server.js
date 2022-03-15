@@ -12,7 +12,7 @@ const logger = morgan("dev");
 app.use(logger);
 
 app.use("/", globalRouter);
-app.use("/users", userRouter);
+app.use("/user", userRouter);
 app.use("/video", videoRouter);
 
 const handleListening = () => console.log(`site : http://localhost:${PORT}`);
