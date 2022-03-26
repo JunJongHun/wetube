@@ -105,4 +105,69 @@ morgan 은 node.js 용 request logger middleware 이다
 morgan 을 사용함으로써 우리가 필요로하는 정보들을 미리 설정해 놓았고 그걸 사용하기만 하면 된다.
 
 
+Router 란? 커트롤러와 URL관리를 쉽게 해준다
+
+///
+
+
+내용 정리하기
+
+
+///
+
+
+Express 에게 html 헬퍼로 pug를 쓰겠다고 할 수 있다.
+express에서 세팅을 할 수 있는데 보통 app.set()으로 세팅을한다.
+app.set("view engine","pug") 이런식으로 세팅을 해준다. (뷰 엔진을 pug로 설정했다는 뜻)
+
+1. npm i pug ( 퍼그를 설치한다.)
+2. pug 를 뷰 엔진으로 설정
+3. pug 파일을 만든다.
+
+
+view 는 유저가 보는 대상을 말한다.( 이해 잘 안감)
+express가 view 를 찾는 방법은 cwd(현재 작업 디렉토리) + /views 디렉토리를 찾는다. 그렇다면 views 폴더를 만들어야 한다는 뜻.
+
+pug 파일을 유저에게 어떻게 보낼까? pug 파일을 그대로 유저에게 보내는게 아니다.
+pug로 만든 파일을 우선 pug에게 보내고 pug가 파일을 렌더링 해서 평범한 html 파일로 만든다.
+
+응답을 할 때, res.render("뷰 이름"); 을 해주면 된다. ex) res.render("home");
+
+express에게 현재 작업 디렉토리는 package.json 이 있는 곳이다.
+cwd는 어떻게 정해지는걸까? 서버를 기동하는 파일의 위치에 따라 결정된다!
+어디서 노드를 부르고 있는지에 따라 결정된다.
+그럼 누가 서버를 기동하는가? package.json 이 한다.
+/documents/wetube 폴더에서 package.json이 node.js를 실행하고 있다면 /documents/wetube 가 cwd가 된다.
+server.js가 있는 src 폴더에 있다면? 바뀌겠지
+서버를 시동하거나 node.js를 실행하는건 package.json 이라는 것을 알고있자.
+
+express cwd 바꾸는 법 app.set("views","원하는 경로") => view를 작동시키기 위한 방법
+process.cwd() 해보면 위치가 바뀌지는 않음
+
+pug의 장점을 살펴보자
+깔끔한 html
+html에 자바스크립트 포함 가능
+혹여 페이지들마다 공통적인 부분을 수정해야 할 때, 한번에 수정 가능하다
+include를 해서 파일을 포함시키면 된다. (단 포함할때 경로 잘 생각하기, 절대경로로 할지 상대경로로할지)
+
+근데 include를 하게 되면, 파일마다 include를 해야하고 결국 복사하는 상황은 같게 된다.
+비슷한 형식이 있다면 거시서 확장해가는 식으로 하면 어떨까?
+extends 를 활용해서 파일을 확정해나가는 식으로 해보자.
+
+block 이란? 말 그대로 블록이라 생각하면 된다. 블럭을 만들어서 끼워 넣는다 생각하자.
+
+pug 에 변수를 어떻게 보내주나? pug파일을 렌더링 하고 있는 녀석에게 같이 주면 된다.
+ex) res.render("pug파일", {변수 : ""}); 이런식으로 보낸다 변수는 여러개 가능, 딕셔너리 형태로
+
+mixin 이 무엇이냐? 전에 partial를 배웠다. partial은 미리 만들어 놓은 html 조각을 갖다 쓰기 위한 것이였다.
+mixin 도 비슷하지만 미리 만들어놓은 html 형태에 데이터를 바꿔가며 사용할 수 있게금 만드는 것이다.
+둘의 차이는 변하는 데이터를 사용하냐 안하냐 이 차이가 있고 include를 하는 것에 차이가 있다.
+mixin은 함수와 비슷한 형태로 만들어 줘야 한다.
+mixin을 사용할때는 +파일명을 써줘야한다. 코드를 적으려고 하는 부분에!
+
+href 할때 주의할점 !
+/ 를 쓰는 것과  안 쓰는 것에 차이!
+href="/edit" 하는 것은 위치에 상관없이 절대경로 느낌이다. absolute url
+href="edit" 하는 것은 현재 위치에서 추가되는 것이다!  relative url
+(url의 끝부분을 바꿔준다 생각하면 된다. ex) localhost:400/videos/3 -> localhost:4000/videos/edit
 
