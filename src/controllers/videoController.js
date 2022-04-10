@@ -36,15 +36,21 @@ export const watch = (req, res, next) => {
   const video = videos[id - 1];
   return res.render("watch", { pageTitle: `Watch`, video: video });
 };
-export const edit = (req, res, next) => {
-  return res.render("edit");
+export const getEdit = (req, res, next) => {
+  let id = req.params.id;
+  console.log(id);
+  const video = videos[id - 1];
+  return res.render("edit", { pageTitle: `Edit ${video.title}`, video: video });
 };
-export const search = (req, res, next) => {
-  return res.send("user Search");
-};
-export const upload = (req, res, next) => {
-  return res.send("Upload");
-};
-export const remove = (req, res, next) => {
-  return res.send("Delete Videos");
-};
+
+export const postEdit = (req, res, next) => {};
+
+// export const search = (req, res, next) => {
+//   return res.send("user Search");
+// };
+// export const upload = (req, res, next) => {
+//   return res.send("Upload");
+// };
+// export const remove = (req, res, next) => {
+//   return res.send("Delete Videos");
+// };
