@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "The best way to watch videos.",
   "main": "src/server.js",
+  "type": "module",
   "scripts": {
     "dev": "nodemon --exec babel-node src/server.js"
   },
