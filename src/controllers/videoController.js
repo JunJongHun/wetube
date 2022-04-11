@@ -1,55 +1,55 @@
-let videos = [
-  {
-    title: "Frist Video",
-    rating: 5,
-    comments: 2,
-    createdAt: "2 minutes ago",
-    views: 59,
-    id: 1,
-  },
+import Video from "../models/Video";
 
-  {
-    title: "Second Video",
-    rating: 5,
-    comments: 2,
-    createdAt: "2 minutes ago",
-    views: 1,
-    id: 2,
-  },
+// const handleSearch = (error, videos) => {
+//   console.log(error, videos);
 
-  {
-    title: "Third Video",
-    rating: 5,
-    comments: 2,
-    createdAt: "2 minutes ago",
-    views: 59,
-    id: 3,
-  },
-];
+// };
 
-export const trending = (req, res, next) => {
-  return res.render("home", { pageTitle: "HOME", videos: videos });
+// Video.find({}, (error, videos) => {
+//   console.log(error, videos);
+// });
+
+export const home = async (req, res, next) => {
+  try {
+    console.log("start");
+    const videos = await Video.find({});
+    console.log(videos);
+    console.log("finished");
+    return res.render("home", { pageTitle: "HOME", videos: [] });
+  } catch (error) {
+    return res.render("Server - Error", error);
+  }
 };
 export const watch = (req, res, next) => {
   let id = req.params.id;
   console.log(id);
-  const video = videos[id - 1];
-  return res.render("watch", { pageTitle: `Watch`, video: video });
+
+  return res.render("watch", { pageTitle: `Watch` });
 };
 export const getEdit = (req, res, next) => {
   let id = req.params.id;
-  console.log(id);
-  const video = videos[id - 1];
-  return res.render("edit", { pageTitle: `Edit ${video.title}`, video: video });
+
+  return res.render("edit", { pageTitle: `Edit` });
 };
 
-export const postEdit = (req, res, next) => {};
+export const postEdit = (req, res, next) => {
+  let id = req.params.id;
+  const title = req.body.title;
+
+  return res.redirect(`/video/${id}`);
+};
+
+export const getUpload = (req, res, next) => {
+  return res.render("upload", { pageTitle: "Upload Video" });
+};
+export const postUpload = (req, res, next) => {
+  console.log(req.body);
+
+  return res.redirect("/");
+};
 
 // export const search = (req, res, next) => {
 //   return res.send("user Search");
-// };
-// export const upload = (req, res, next) => {
-//   return res.send("Upload");
 // };
 // export const remove = (req, res, next) => {
 //   return res.send("Delete Videos");

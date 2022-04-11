@@ -3,8 +3,7 @@ import morgan from "morgan";
 import globalRouter from "./routers/globalRouter.js";
 import videoRouter from "./routers/videoRouter.js";
 import userRouter from "./routers/userRouter.js";
-
-const PORT = 4000;
+import { application } from "express";
 
 const app = express();
 
@@ -15,10 +14,10 @@ app.set("views", process.cwd() + "/src/views");
 console.log(process.cwd());
 app.use(logger);
 
+app.use(express.urlencoded({ extended: true }));
+
 app.use("/", globalRouter);
 app.use("/user", userRouter);
 app.use("/video", videoRouter);
 
-const handleListening = () => console.log(`site : http://localhost:${PORT}`);
-
-app.listen(PORT, handleListening);
+export default app;
