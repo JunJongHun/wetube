@@ -15,7 +15,7 @@ export const home = async (req, res, next) => {
     const videos = await Video.find({});
     console.log(videos);
     console.log("finished");
-    return res.render("home", { pageTitle: "HOME", videos: [] });
+    return res.render("home", { pageTitle: "HOME", videos });
   } catch (error) {
     return res.render("Server - Error", error);
   }
@@ -42,8 +42,31 @@ export const postEdit = (req, res, next) => {
 export const getUpload = (req, res, next) => {
   return res.render("upload", { pageTitle: "Upload Video" });
 };
-export const postUpload = (req, res, next) => {
-  console.log(req.body);
+export const postUpload = async (req, res, next) => {
+  const { title, description, hashtags } = req.body;
+  // 데이터 베이스에 저장하는 두가지 방법
+  // const video = new Video({
+  //   title: title,
+  //   description: description,
+  //   createdAt: Date.now(),
+  //   hashtags: hashtags.split(",").map((word) => `#${word}`),
+  //   meta: {
+  //     views: 0,
+  //     rating: 0,
+  //   },
+  // });
+  // const dbVideo = await video.save();
+  // console.log(dbVideo);
+  await Video.create({
+    title: title,
+    description: description,
+    createdAt: Date.now(),
+    hashtags: hashtags.split(",").map((word) => `#${word}`),
+    meta: {
+      views: 0,
+      rating: 0,
+    },
+  });
 
   return res.redirect("/");
 };
