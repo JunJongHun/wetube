@@ -3,7 +3,6 @@ import morgan from "morgan";
 import globalRouter from "./routers/globalRouter.js";
 import videoRouter from "./routers/videoRouter.js";
 import userRouter from "./routers/userRouter.js";
-import { application } from "express";
 
 const app = express();
 
