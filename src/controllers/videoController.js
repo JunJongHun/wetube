@@ -20,11 +20,13 @@ export const home = async (req, res, next) => {
     return res.render("Server - Error", error);
   }
 };
-export const watch = (req, res, next) => {
+export const watch = async (req, res, next) => {
   let id = req.params.id;
   console.log(id);
+  const video = await Video.findById(id);
+  console.log(video);
 
-  return res.render("watch", { pageTitle: `Watch` });
+  return res.render("watch", { pageTitle: video.title, video });
 };
 export const getEdit = (req, res, next) => {
   let id = req.params.id;
