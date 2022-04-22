@@ -1,7 +1,9 @@
 import mongoose from "mongoose";
 // const mongoose = require("mongoose");
 
-mongoose.connect("주소입력");
+mongoose.connect(
+  "mongodb+srv://jonghun:0209@cluster0.wev7c.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
+);
 
 const db = mongoose.connection;
 

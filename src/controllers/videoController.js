@@ -11,10 +11,10 @@ import Video from "../models/Video";
 
 export const home = async (req, res, next) => {
   try {
-    console.log("start");
+    // console.log("start");
     const videos = await Video.find({});
-    console.log(videos);
-    console.log("finished");
+    // console.log(videos);
+    // console.log("finished");
     return res.render("home", { pageTitle: "HOME", videos });
   } catch (error) {
     return res.render("Server - Error", error);
@@ -22,9 +22,9 @@ export const home = async (req, res, next) => {
 };
 export const watch = async (req, res, next) => {
   let id = req.params.id;
-  console.log(id);
+  // console.log(id);
   const video = await Video.findById(id);
-  console.log(video);
+  // console.log(video);
   if (video === null) {
     return res.render("404", { pageTitle: "Video not found" });
   } else {
@@ -41,11 +41,23 @@ export const getEdit = async (req, res, next) => {
   }
 };
 
-export const postEdit = (req, res, next) => {
+export const postEdit = async (req, res, next) => {
   let id = req.params.id;
-  const title = req.body.title;
-
-  return res.redirect(`/video/${id}`);
+  const { title, description, hashtags } = req.body;
+  const video = await Video.exists({ _id: id });
+  console.log(video);
+  if (video === null) {
+    return res.render("404", { pageTitle: "Video not found" });
+  } else {
+    await Video.findByIdAndUpdate(id, {
+      title,
+      description,
+      hashtags: hashtags
+        .split(",")
+        .map((word) => (word.startsWith("#") ? word : `#${word}`)),
+    });
+    return res.redirect(`/video/${id}`);
+  }
 };
 
 export const getUpload = (req, res, next) => {
@@ -71,7 +83,9 @@ export const postUpload = async (req, res, next) => {
       title: title,
       description: description,
       // createdAt: Date.now(),
-      hashtags: hashtags.split(",").map((word) => `#${word}`),
+      hashtags: hashtags
+        .split(",")
+        .map((word) => (word.startsWith("#") ? word : `#${word}`)),
       meta: {
         views: 0,
         rating: 0,
