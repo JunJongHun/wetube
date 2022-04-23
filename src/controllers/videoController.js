@@ -15,6 +15,7 @@ export const home = async (req, res, next) => {
     const videos = await Video.find({});
     // console.log(videos);
     // console.log("finished");
+    console.log(videos);
     return res.render("home", { pageTitle: "HOME", videos });
   } catch (error) {
     return res.render("Server - Error", error);
@@ -83,9 +84,7 @@ export const postUpload = async (req, res, next) => {
       title: title,
       description: description,
       // createdAt: Date.now(),
-      hashtags: hashtags
-        .split(",")
-        .map((word) => (word.startsWith("#") ? word : `#${word}`)),
+      hashtags,
       meta: {
         views: 0,
         rating: 0,
