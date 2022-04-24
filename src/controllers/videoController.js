@@ -53,9 +53,7 @@ export const postEdit = async (req, res, next) => {
     await Video.findByIdAndUpdate(id, {
       title,
       description,
-      hashtags: hashtags
-        .split(",")
-        .map((word) => (word.startsWith("#") ? word : `#${word}`)),
+      hashtags: Video.formatHashtags(hashtags),
     });
     return res.redirect(`/video/${id}`);
   }
@@ -84,7 +82,7 @@ export const postUpload = async (req, res, next) => {
       title: title,
       description: description,
       // createdAt: Date.now(),
-      hashtags,
+      hashtags: Video.formatHashtags(hashtags),
       meta: {
         views: 0,
         rating: 0,
