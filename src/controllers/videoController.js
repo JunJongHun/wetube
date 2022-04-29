@@ -12,7 +12,7 @@ import Video from "../models/Video";
 export const home = async (req, res, next) => {
   try {
     // console.log("start");
-    const videos = await Video.find({});
+    const videos = await Video.find({}).sort({ createdAt: "desc" });
     // console.log(videos);
     // console.log("finished");
     console.log(videos);
@@ -99,9 +99,11 @@ export const postUpload = async (req, res, next) => {
   }
 };
 
-// export const search = (req, res, next) => {
-//   return res.send("user Search");
-// };
+export const search = (req, res, next) => {
+  const { keyword } = req.query;
+  console.log("should search for ", keyword);
+  return res.render("search", { pageTitle: "Search" });
+};
 // export const remove = (req, res, next) => {
 //   return res.send("Delete Videos");
 // };

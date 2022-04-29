@@ -7,6 +7,6 @@ const gloablRouter = express.Router();
 gloablRouter.get("/", home);
 gloablRouter.get("/join", join);
 gloablRouter.get("/login", login);
-// gloablRouter.get("/search", search);
+gloablRouter.get("/search", search);
 
 export default gloablRouter;
