@@ -3,6 +3,7 @@ import morgan from "morgan";
 import rootRouter from "./routers/rootRouter.js";
 import videoRouter from "./routers/videoRouter.js";
 import userRouter from "./routers/userRouter.js";
+import session from "express-session";
 
 const app = express();
 
@@ -14,6 +15,7 @@ console.log(process.cwd());
 app.use(logger);
 
 app.use(express.urlencoded({ extended: true }));
+app.use(session({ secret: "Hello!", resave: true, saveUninitialized: true }));
 
 app.use("/", rootRouter);
 app.use("/user", userRouter);
